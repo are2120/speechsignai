@@ -1,0 +1,10 @@
+# Environment variables (jangan di-commit!)
+.env
+.env.local
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

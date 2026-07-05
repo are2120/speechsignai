@@ -1,0 +1,31 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "*.php",
+            "use": "@vercel/php"
+        },
+        {
+            "src": "assets/**",
+            "use": "@vercel/static"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/assets/(.*)",
+            "dest": "/assets/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/$1.php",
+            "match": {
+                "file": false,
+                "isDirectory": false
+            }
+        },
+        {
+            "src": "/",
+            "dest": "/index.php"
+        }
+    ]
+}

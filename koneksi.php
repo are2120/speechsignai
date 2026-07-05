@@ -1,10 +1,11 @@
 <?php
 session_start();
 
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$dbname = 'speechsign_ai';
+// Gunakan environment variable untuk Vercel, fallback ke default untuk local
+$host = getenv('DB_HOST') ?: 'localhost';
+$user = getenv('DB_USER') ?: 'root';
+$pass = getenv('DB_PASS') ?: '';
+$dbname = getenv('DB_NAME') ?: 'speechsign_ai';
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 

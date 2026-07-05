@@ -1,0 +1,14 @@
+{
+    "name": "speechsign/ai",
+    "description": "SpeechSign AI - PHP Native",
+    "type": "project",
+    "require": {
+        "php": ">=7.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Your Name"
+        }
+    ]
+}
