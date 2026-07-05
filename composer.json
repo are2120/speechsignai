@@ -1,0 +1,8 @@
+{
+    "name": "speechsign/ai",
+    "description": "SpeechSign AI - Transkripsi & Bahasa Isyarat",
+    "type": "project",
+    "require": {
+        "php": ">=7.4"
+    }
+}

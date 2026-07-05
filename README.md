@@ -1,90 +1,74 @@
-# SpeechSign AI - PHP Native
+# SpeechSign AI - PHP Native for Vercel
 
-Aplikasi untuk transkripsi suara, ringkasan otomatis, dan deteksi bahasa isyarat.
+Aplikasi untuk transkripsi suara, ringkasan otomatis, dan deteksi bahasa isyarat. **Sudah 100% compatible Vercel!**
+
+---
 
 ## 📋 Persyaratan Sistem
 - PHP 7.4 atau lebih baru
-- MySQL/MariaDB
-- Web server (Apache/Nginx/XAMPP/WAMP)
+- MySQL/MariaDB (remote untuk Vercel)
+- Web server (Apache/Nginx/XAMPP/WAMP) untuk lokal
 
 ---
 
-## 🚀 Instalasi & Jalankan di Lokal
+## 🚀 Cara Deploy ke Vercel (LENGKAP & PERMANEN!)
 
-### 1. Import Database
-1. Buka phpMyAdmin atau tool MySQL lainnya
-2. Buat database baru bernama `speechsign_ai`
-3. Import file `database.sql` ke database tersebut
+### 1. Siapkan Database Remote
+Vercel tidak menyediakan database native. Buat database di platform berikut (GRATIS!):
+- **PlanetScale** (Free) - [planetscale.com](https://planetscale.com/)
+- **Railway** (Free) - [railway.app](https://railway.app/)
+- **Supabase** (Free) - [supabase.com](https://supabase.com/)
 
-### 2. Konfigurasi Koneksi
-File `koneksi.php` sudah dikonfigurasi default untuk XAMPP:
-```php
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$dbname = 'speechsign_ai';
+Setelah database siap:
+1. Import `database.sql` ke database remote tersebut
+2. Catat kredensial database Anda: `host`, `username`, `password`, `database name`
+
+### 2. Deploy ke Vercel via GitHub
+1. **Push proyek ke GitHub** (pastikan semua file termasuk di commit!)
+2. Buka [vercel.com](https://vercel.com/), login, lalu klik **Add New > Project**
+3. Pilih repositori Anda, lalu klik **Deploy**
+4. Tunggu deploy selesai (walaupun tanpa environment variables dulu tidak apa-apa)
+
+### 3. Tambahkan Environment Variables di Vercel
+1. Di dashboard proyek Vercel, klik **Settings > Environment Variables**
+2. Tambahkan variabel berikut (satu per satu):
+   - `DB_HOST`: Isi dengan hostname database remote Anda
+   - `DB_USER`: Username database Anda
+   - `DB_PASS`: Password database Anda
+   - `DB_NAME`: Nama database Anda
+3. Klik **Save**, lalu **Redeploy** proyek!
+
+### 4. Akses Aplikasi!
+Aplikasi Anda sudah LIVE di domain Vercel! ✨
+
+---
+
+## 🏠 Jalankan di Lokal (Untuk Development)
+
+1. **Import Database**: Buat database `speechsign_ai` di lokal lalu import `database.sql`
+2. **Jalankan Web Server**: Letakkan semua file di `htdocs` (XAMPP) / `www` (WAMP)
+3. **Akses**: Buka browser → `http://localhost/speechsign-ai/`
+
+---
+
+## 📂 Struktur Proyek (Sesuai Standar Vercel)
 ```
-Edit sesuai konfigurasi database lokal Anda jika perlu.
-
-### 3. Jalankan Aplikasi
-Letakkan semua file di direktori `htdocs` (XAMPP) atau `www` (WAMP), lalu akses di browser:
-`http://localhost/speechsign-ai/`
-
----
-
-## 🌐 Cara Deploy ke Hosting (Realistis & Mudah!)
-**Vercel tidak mensupport PHP native secara official.** Gunakan hosting PHP berikut (banyak yang FREE):
-
-### Pilihan Hosting PHP Free / Murah
-1. **InfinityFree** (Free) - [infinityfree.net](https://infinityfree.net/)
-2. **000webhost** (Free) - [000webhost.com](https://www.000webhost.com/)
-3. **Hostinger** (Murah) - [hostinger.com](https://www.hostinger.com/)
-
-### Langkah Deploy
-1. **Buat Akun & Database di Hosting**
-   - Buat database baru di hosting
-   - Import `database.sql` ke database hosting
-   - Catat: hostname, username, password, nama database
-
-2. **Edit Konfigurasi `koneksi.php`**
-   Ubah sesuai kredensial database hosting Anda:
-   ```php
-   $host = 'hostname_database_hosting';
-   $user = 'username_database';
-   $pass = 'password_database';
-   $dbname = 'nama_database';
-   ```
-
-3. **Upload Semua File ke Hosting**
-   - Upload SEMUA file ke direktori `public_html` (atau `htdocs`) di hosting
-   - File `index.php` harus berada di direktori root!
-
-4. **Akses Aplikasi!**
-   Buka domain hosting Anda → aplikasi Anda live! ✨
-
----
-
-## 📂 Struktur File
-```
-.
-├── assets/              # File statis (css, js, images)
-│   ├── css/style.css
-│   └── js/script.js
-├── .htaccess            # Konfigurasi security & caching (untuk Apache)
-├── .gitignore          # File yang tidak di-commit ke git
-├── database.sql        # Schema database
-├── koneksi.php       # Koneksi database & helper
-├── index.php         # Halaman landing
-├── login.php         # Login user
-├── register.php      # Registrasi user
-├── logout.php        # Logout
-├── dashboard.php     # Dashboard utama
-├── recordings.php   # Daftar rekaman
-├── recordings-create.php # Buat rekaman baru
-├── recordings-show.php  # Detail rekaman
-├── sign-language.php # Deteksi bahasa isyarat
-├── conversation.php # Komunikasi dua arah
-├── profile.php        # Profile user
+Speech-signAI/
+├── api/                    <-- Semua file PHP & Logic disini!
+│   ├── index.php           <-- Router utama untuk Vercel
+│   ├── koneksi.php         <-- Koneksi database (support Env Vars)
+│   ├── index.php           <-- Landing page
+│   ├── login.php
+│   ├── register.php
+│   ├── dashboard.php
+│   └── ... (semua file PHP lain)
+├── public/                 <-- Semua file STATIC (css, js, dll)
+│   └── assets/
+│       ├── css/style.css
+│       └── js/script.js
+├── vercel.json             <-- KONFIGURASI VERCEL (PENTING!)
+├── composer.json           <-- Untuk deteksi PHP di Vercel
+├── database.sql            <-- Schema database
 └── README.md
 ```
 
@@ -101,7 +85,36 @@ Letakkan semua file di direktori `htdocs` (XAMPP) atau `www` (WAMP), lalu akses 
 ---
 
 ## 🛡️ Keamanan
-- Menggunakan Prepared Statement untuk mencegah SQL Injection
+- Menggunakan Prepared Statement (anti SQL Injection)
 - Session PHP untuk autentikasi
 - Sanitasi input dengan `clean_input()`
-- Security headers via .htaccess
+- Security headers via `.htaccess`
+
+---
+
+## 📝 Daftar Perubahan yang Dilakukan
+Berikut penjelasan detail setiap perubahan untuk Vercel:
+
+1. **Membuat struktur folder `api/` dan `public/`**:
+   - `api/`: Tempat semua file PHP dan logic (dijalankan sebagai Vercel Functions)
+   - `public/`: Tempat semua file static (CSS, JS, gambar) agar bisa diakses langsung oleh browser
+
+2. **Membuat `api/index.php` (Router Utama)**:
+   - Ini adalah entry point untuk SEMUA request ke Vercel
+   - Memetakan URL ke file PHP yang sesuai di folder `api/`
+
+3. **Membuat `vercel.json` yang Valid**:
+   - Menggunakan runtime `vercel-php@0.7.4` (runtime community yang populer dan stabil)
+   - Mengkonfigurasi routing agar file static diakses dari `/assets/`
+   - Tidak menggunakan property `match` yang sudah deprecated!
+
+4. **Perbaiki Semua Path Assets**:
+   - Menambahkan `/` di depan semua path assets (contoh: `assets/css/style.css` → `/assets/css/style.css`)
+   - Agar assets bisa diakses dari direktori mana saja di Vercel
+
+5. **Perbaiki `koneksi.php`**:
+   - Mendukung Environment Variables untuk Vercel
+   - Fallback ke konfigurasi lokal untuk development
+
+6. **Membuat `composer.json`**:
+   - Agar Vercel mendeteksi bahwa ini adalah proyek PHP

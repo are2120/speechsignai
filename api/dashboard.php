@@ -50,7 +50,7 @@ $recent_recordings = $stmt->get_result();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
@@ -215,6 +215,6 @@ $recent_recordings = $stmt->get_result();
         </main>
     </div>
 
-    <script src="assets/js/script.js"></script>
+    <script src="/assets/js/script.js"></script>
 </body>
 </html>
