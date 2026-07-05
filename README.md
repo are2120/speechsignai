@@ -64,27 +64,28 @@ Aplikasi Anda siap diakses di URL yang diberikan Vercel! ✨
 ## 📂 Struktur File
 ```
 .
-├── assets/              # File statis (css, js, images)
-│   ├── css/style.css
-│   └── js/script.js
-├── .htaccess            # Konfigurasi security & caching
-├── .gitignore          # File yang tidak di-commit
-├── .env.example        # Template environment variables
-├── composer.json       # Konfigurasi PHP untuk Vercel
-├── vercel.json         # Konfigurasi routing Vercel
-├── database.sql        # Schema database
-├── koneksi.php       # Koneksi database & helper
-├── index.php         # Halaman landing
-├── login.php         # Login user
-├── register.php      # Registrasi user
-├── logout.php        # Logout
-├── dashboard.php     # Dashboard utama
-├── recordings.php   # Daftar rekaman
-├── recordings-create.php # Buat rekaman baru
-├── recordings-show.php  # Detail rekaman
-├── sign-language.php # Deteksi bahasa isyarat
-├── conversation.php # Komunikasi dua arah
-└── profile.php        # Profile user
+├── public/             # Semua file web untuk Vercel
+│   ├── assets/         # File statis (css, js, images)
+│   │   ├── css/style.css
+│   │   └── js/script.js
+│   ├── koneksi.php     # Koneksi database & helper
+│   ├── index.php       # Halaman landing
+│   ├── login.php       # Login user
+│   ├── register.php    # Registrasi user
+│   ├── logout.php      # Logout
+│   ├── dashboard.php   # Dashboard utama
+│   ├── recordings.php # Daftar rekaman
+│   ├── recordings-create.php # Buat rekaman baru
+│   ├── recordings-show.php  # Detail rekaman
+│   ├── sign-language.php # Deteksi bahasa isyarat
+│   ├── conversation.php # Komunikasi dua arah
+│   └── profile.php     # Profile user
+├── .htaccess           # Konfigurasi security & caching (untuk Apache)
+├── .gitignore         # File yang tidak di-commit
+├── .env.example       # Template environment variables
+├── composer.json      # Konfigurasi PHP untuk Vercel
+├── vercel.json        # Konfigurasi routing & build Vercel
+└── database.sql       # Schema database
 ```
 
 ---

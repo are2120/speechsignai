@@ -2,12 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "*.php",
+      "src": "public/**.php",
       "use": "@vercel/php"
     },
     {
-      "src": "assets/**",
+      "src": "public/assets/**",
       "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
     }
   ]
 }
