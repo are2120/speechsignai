@@ -17,11 +17,7 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/$1.php",
-            "match": {
-                "file": false,
-                "isDirectory": false
-            }
+            "dest": "/$1.php"
         },
         {
             "src": "/",
