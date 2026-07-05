@@ -9,11 +9,5 @@
       "src": "assets/**",
       "use": "@vercel/static"
     }
-  ],
-  "routes": [
-    {
-      "src": "/",
-      "dest": "/index.php"
-    }
   ]
 }
