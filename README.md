@@ -11,6 +11,28 @@ Aplikasi untuk transkripsi suara, ringkasan otomatis, dan deteksi bahasa isyarat
 
 ---
 
+## 📝 Environment Variables
+
+### Lokal (Development)
+Untuk menjalankan di lokal, buat file `.env` (copy dari `.env.example`):
+1. Copy file `.env.example` menjadi `.env`
+2. Isi sesuai konfigurasi database lokal Anda:
+   ```env
+   DB_HOST=localhost
+   DB_USER=root
+   DB_PASS=
+   DB_NAME=speechsign_ai
+   ```
+
+### Vercel (Production)
+Di Vercel, tambahkan Environment Variables di **Settings > Environment Variables:
+1. `DB_HOST`: Host database remote Anda (contoh dari PlanetScale/Railway)
+2. `DB_USER`: Username database
+3. `DB_PASS`: Password database
+4. `DB_NAME`: Nama database
+
+---
+
 ## 🚀 Cara Deploy ke Vercel (LENGKAP & PERMANEN!)
 
 ### 1. Siapkan Database Remote

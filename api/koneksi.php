@@ -1,6 +1,33 @@
 <?php
 session_start();
 
+/**
+ * Parser file .env sederhana untuk development lokal
+ * Kompatibel dengan PHP 7.4+
+ */
+function load_env($path) {
+    if (!file_exists($path)) return;
+    
+    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        $trimmedLine = trim($line);
+        if (strpos($trimmedLine, '#') === 0) continue;
+        
+        $parts = explode('=', $line, 2);
+        if (count($parts) < 2) continue;
+        
+        $key = trim($parts[0]);
+        $value = trim($parts[1]);
+        
+        if (!empty($key) && !getenv($key)) {
+            putenv("$key=$value");
+        }
+    }
+}
+
+// Load file .env untuk development lokal
+load_env(__DIR__ . '/../.env');
+
 // Konfigurasi database - mendukung Environment Variables Vercel dan lokal!
 $host = getenv('DB_HOST') ?: 'localhost';
 $user = getenv('DB_USER') ?: 'root';
