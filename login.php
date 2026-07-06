@@ -22,6 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param("is", $user['id'], $_SERVER['REMOTE_ADDR']);
             $stmt->execute();
 
+            // Ensure no output before redirect
+            ob_end_clean();
             header('Location: ' . base_url('dashboard.php'));
             exit;
         } else {
