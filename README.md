@@ -35,33 +35,42 @@ Di Vercel, tambahkan Environment Variables di **Settings > Environment Variables
 
 ## 🚀 Cara Deploy ke Vercel (LENGKAP & PERMANEN!)
 
-### 1. Siapkan Database Remote
-Vercel tidak menyediakan database native. Buat database di platform berikut (GRATIS!):
-- **PlanetScale** (Free) - [planetscale.com](https://planetscale.com/)
-- **Railway** (Free) - [railway.app](https://railway.app/)
-- **Supabase** (Free) - [supabase.com](https://supabase.com/)
+### 1. Siapkan Database Remote di FreeSQLDatabase
+FreeSQLDatabase adalah pilihan database MySQL GRATIS yang mudah!
 
-Setelah database siap:
-1. Import `database.sql` ke database remote tersebut
-2. Catat kredensial database Anda: `host`, `username`, `password`, `database name`
+Langkah-langkah:
+1. Buka [FreeSQLDatabase](https://www.freesqldatabase.com/)
+2. Klik **"Create Database"** → Isi formulir (nama database, email, dll)
+3. Tunggu email konfirmasi → klik link verifikasi
+4. Di email, Anda akan mendapatkan **kredensial database**:
+   - Database Host (contoh: `sql12.freesqldatabase.com`)
+   - Database Name (contoh: `sql12345678`)
+   - Database Username (contoh: `sql12345678`)
+   - Database Password
+   - Port: `3306`
 
-### 2. Deploy ke Vercel via GitHub
+### 2. Import `database.sql` ke FreeSQLDatabase via phpMyAdmin
+1. Buka link **phpMyAdmin** yang diberikan di email FreeSQLDatabase
+2. Login dengan username & password dari email
+3. Pilih database Anda (nama database dari email) di sidebar kiri
+4. Klik tab **"Import"** di bagian atas
+5. Klik **"Choose File"** → pilih file `database.sql` dari proyek Anda
+6. Klik **"Go"** di bagian bawah → tunggu sampai selesai!
+
+### 3. Deploy ke Vercel via GitHub
 1. **Push proyek ke GitHub** (pastikan semua file termasuk di commit!)
 2. Buka [vercel.com](https://vercel.com/), login, lalu klik **Add New > Project**
 3. Pilih repositori Anda, lalu klik **Deploy**
 4. Tunggu deploy selesai (walaupun tanpa environment variables dulu tidak apa-apa)
 
-### 3. Tambahkan Environment Variables di Vercel
+### 4. Tambahkan Environment Variables di Vercel
 1. Di dashboard proyek Vercel, klik **Settings > Environment Variables**
-2. Tambahkan variabel berikut (satu per satu):
-   - `DB_HOST`: Isi dengan hostname database remote Anda
-   - `DB_USER`: Username database Anda
-   - `DB_PASS`: Password database Anda
-   - `DB_NAME`: Nama database Anda
+2. Tambahkan variabel berikut (satu per satu, isi sesuai kredensial FreeSQLDatabase Anda!):
+   - `DB_HOST`: Isi dengan Database Host dari email (contoh: `sql12.freesqldatabase.com`)
+   - `DB_USER`: Isi dengan Database Username
+   - `DB_PASS`: Isi dengan Database Password
+   - `DB_NAME`: Isi dengan Database Name
 3. Klik **Save**, lalu **Redeploy** proyek!
-
-### 4. Akses Aplikasi!
-Aplikasi Anda sudah LIVE di domain Vercel! ✨
 
 ---
 
