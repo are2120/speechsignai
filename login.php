@@ -1,11 +1,22 @@
 <?php
+// WAJIB berada di baris pertama, sebelum ada output HTML atau spasi kosong
+session_start();
+
 require 'api/koneksi.php';
 
 $error = '';
 
+// Jika pengguna sudah login, langsung tendang ke dashboard (mencegah akses halaman login berulang)
+if (isset($_SESSION['user_id'])) {
+    header('Location: dashboard.php');
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // If database connection fails, let's just simulate login for testing
-    if ($conn->connect_error === null || $conn->connect_error === '') {
+    // Validasi koneksi database secara ketat, bukan dengan bypass login yang berbahaya
+    if ($conn->connect_error) {
+        $error = 'Sistem sedang mengalami gangguan koneksi database. Silakan coba lagi nanti.';
+    } else {
         $email = clean_input($_POST['email']);
         $password = $_POST['password'];
 
@@ -16,19 +27,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();
+            
+            // Verifikasi kecocokan hash password
             if (password_verify($password, $user['password'])) {
+                // Set session data untuk autentikasi global
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['name'];
                 
-                // Skip activity log if connection is bad
-                if (!$conn->connect_error) {
-                    $stmt = $conn->prepare("INSERT INTO activity_logs (user_id, action, ip_address) VALUES (?, 'login', ?)");
-                    $stmt->bind_param("is", $user['id'], $_SERVER['REMOTE_ADDR']);
-                    $stmt->execute();
-                }
+                // Eksekusi pencatatan log aktivitas
+                $stmt_log = $conn->prepare("INSERT INTO activity_logs (user_id, action, ip_address) VALUES (?, 'login', ?)");
+                $stmt_log->bind_param("is", $user['id'], $_SERVER['REMOTE_ADDR']);
+                $stmt_log->execute();
 
-                // Simple direct redirect - no complex functions!
-                ob_end_clean();
+                // Redirect ke dashboard
                 header('Location: dashboard.php');
                 exit;
             } else {
@@ -37,13 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $error = 'Email tidak terdaftar';
         }
-    } else {
-        // If no DB connection, let's just do a fake login for testing
-        $_SESSION['user_id'] = 1;
-        $_SESSION['user_name'] = 'Test User';
-        ob_end_clean();
-        header('Location: dashboard.php');
-        exit;
     }
 }
 ?>
