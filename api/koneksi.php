@@ -55,6 +55,11 @@ function base_url($path = '') {
  * Helper untuk asset URL
  */
 function asset_url($path) {
+    // If on Vercel (check VERCEL env var), use root-relative
+    if (getenv('VERCEL') || !empty(getenv('VERCEL_URL'))) {
+        return '/assets/' . ltrim($path, '/');
+    }
+    // Otherwise, use full base_url for local subfolder
     return base_url('assets/' . ltrim($path, '/'));
 }
 
