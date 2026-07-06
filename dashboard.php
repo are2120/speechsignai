@@ -204,7 +204,7 @@ if ($db_connected) {
                                             </div>
                                         </div>
                                     </div>
-                                <?php endwhile; ?>
+                                <?php endforeach; ?>
                             </div>
                         <?php else: ?>
                             <div class="empty-state">

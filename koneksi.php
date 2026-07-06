@@ -43,27 +43,26 @@ $conn = @new mysqli($host, $user, $pass, $dbname);
  * Berjalan di localhost (subfolder) dan Vercel (root)
  */
 function base_url($path = '') {
-    // Check if we're on Vercel
-    if (getenv('VERCEL') === '1' || !empty(getenv('VERCEL_URL'))) {
-        $protocol = 'https';
-        $host = getenv('VERCEL_URL') ?: $_SERVER['HTTP_HOST'];
-        $base = $protocol . '://' . $host;
-    } else {
-        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
-        $host = $_SERVER['HTTP_HOST'];
-        $script = $_SERVER['SCRIPT_NAME'];
-        $dir = dirname($script);
-        $base = rtrim("$protocol://$host$dir", '/');
-    }
-    
+    $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'];
+    $script = $_SERVER['SCRIPT_NAME'];
+    $dir = dirname($script);
+    $base = rtrim("$protocol://$host$dir", '/');
     return $base . ($path ? '/' . ltrim($path, '/') : '');
 }
 
 /**
- * Helper untuk asset URL
+ * Helper untuk asset URL - always use root-relative
  */
 function asset_url($path) {
-    return base_url('assets/' . ltrim($path, '/'));
+    // Try to auto-detect if we're in a subfolder
+    $script_name = $_SERVER['SCRIPT_NAME'];
+    $subfolder = dirname($script_name);
+    if ($subfolder === '/' || $subfolder === '\\') {
+        return '/assets/' . ltrim($path, '/');
+    } else {
+        return $subfolder . '/assets/' . ltrim($path, '/');
+    }
 }
 
 function clean_input($data) {
