@@ -31,10 +31,10 @@ function load_env($path) {
 load_env(__DIR__ . '/../.env');
 
 // Konfigurasi database - mendukung Environment Variables Vercel dan lokal!
-$host = getenv('DB_HOST') ?: 'localhost';
-$user = getenv('DB_USER') ?: 'root';
-$pass = getenv('DB_PASS') ?: '';
-$dbname = getenv('DB_NAME') ?: 'speechsign_ai';
+$host = getenv('DB_HOST') ?: 'sql12.freesqldatabase.com';
+$user = getenv('DB_USER') ?: 'sql12832341';
+$pass = getenv('DB_PASS') ?: 'VZttT9Bi5T';
+$dbname = getenv('DB_NAME') ?: 'sql12832341';
 
 $conn = @new mysqli($host, $user, $pass, $dbname);
 
