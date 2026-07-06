@@ -3,8 +3,16 @@
 -- Kompatibel dengan FreeSQLDatabase (MySQL Lama) & phpMyAdmin Terbaru
 -- =============================================
 
+-- Hapus tabel lama jika ada (urutan penting untuk foreign key constraint!)
+DROP TABLE IF EXISTS activity_logs;
+DROP TABLE IF EXISTS summaries;
+DROP TABLE IF EXISTS transcripts;
+DROP TABLE IF EXISTS recordings;
+DROP TABLE IF EXISTS password_reset_tokens;
+DROP TABLE IF EXISTS users;
+
 -- Tabel users
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(191) NOT NULL,
     email VARCHAR(191) NOT NULL,
@@ -20,7 +28,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE INDEX idx_users_email ON users(email);
 
 -- Tabel password_reset_tokens
-CREATE TABLE IF NOT EXISTS password_reset_tokens (
+CREATE TABLE password_reset_tokens (
     email VARCHAR(191) NOT NULL,
     token VARCHAR(191) NOT NULL,
     created_at DATETIME NULL DEFAULT NULL,
@@ -28,7 +36,7 @@ CREATE TABLE IF NOT EXISTS password_reset_tokens (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Tabel recordings
-CREATE TABLE IF NOT EXISTS recordings (
+CREATE TABLE recordings (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     title VARCHAR(191) NOT NULL,
@@ -44,7 +52,7 @@ CREATE TABLE IF NOT EXISTS recordings (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Tabel transcripts
-CREATE TABLE IF NOT EXISTS transcripts (
+CREATE TABLE transcripts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     recording_id INT NOT NULL,
     content LONGTEXT NULL DEFAULT NULL,
@@ -58,7 +66,7 @@ CREATE TABLE IF NOT EXISTS transcripts (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Tabel summaries
-CREATE TABLE IF NOT EXISTS summaries (
+CREATE TABLE summaries (
     id INT AUTO_INCREMENT PRIMARY KEY,
     recording_id INT NOT NULL,
     summary TEXT NULL DEFAULT NULL,
@@ -71,7 +79,7 @@ CREATE TABLE IF NOT EXISTS summaries (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Tabel activity_logs
-CREATE TABLE IF NOT EXISTS activity_logs (
+CREATE TABLE activity_logs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     action VARCHAR(191) NOT NULL,
