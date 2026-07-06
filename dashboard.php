@@ -1,8 +1,13 @@
 <?php
+// WAJIB berada di baris pertama untuk membaca data session dari login.php
+session_start();
+
 require 'api/koneksi.php';
 require_login();
 
 $db_connected = !$conn->connect_error;
+
+// Jika require_login() lolos, variabel session ini dipastikan ada isinya
 $user_id = $_SESSION['user_id'];
 
 $stats = [
@@ -13,7 +18,7 @@ $stats = [
 ];
 $recent_recordings = [];
 
-// Only try DB queries if connection is good
+// Eksekusi kueri database hanya jika koneksi aman
 if ($db_connected) {
     $stmt = $conn->prepare("SELECT COUNT(*) as count FROM recordings WHERE user_id = ?");
     $stmt->bind_param("i", $user_id);
