@@ -1,4 +1,10 @@
 <?php
+// Set session save path to a writable directory (for Vercel compatibility)
+$sessionSavePath = sys_get_temp_dir() . '/speechsign_sessions';
+if (!is_dir($sessionSavePath)) {
+    mkdir($sessionSavePath, 0700, true);
+}
+session_save_path($sessionSavePath);
 session_start();
 
 /**
