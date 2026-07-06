@@ -1,5 +1,5 @@
 <?php
-require 'koneksi.php';
+require 'api/koneksi.php';
 require_login();
 ?>
 <!DOCTYPE html>
@@ -14,7 +14,7 @@ require_login();
     <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
 </head>
 <body>
-    <?php include 'sidebar.php'; ?>
+    <?php include 'includes/sidebar.php'; ?>
 
     <div class="main-content">
         <header class="topbar">

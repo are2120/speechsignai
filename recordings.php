@@ -1,5 +1,5 @@
 <?php
-require 'koneksi.php';
+require 'api/koneksi.php';
 require_login();
 
 $user_id = $_SESSION['user_id'];
@@ -21,7 +21,7 @@ $recordings = $stmt->get_result();
     <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
 </head>
 <body>
-    <?php include 'sidebar.php'; ?>
+    <?php include 'includes/sidebar.php'; ?>
 
     <div class="main-content">
         <header class="topbar">

@@ -1,5 +1,5 @@
 <?php
-require 'koneksi.php';
+require 'api/koneksi.php';
 require_login();
 
 $db_connected = !$conn->connect_error;
@@ -61,7 +61,7 @@ if ($db_connected) {
     <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
 </head>
 <body>
-    <?php include 'sidebar.php'; ?>
+    <?php include 'includes/sidebar.php'; ?>
 
     <div class="main-content">
         <header class="topbar">

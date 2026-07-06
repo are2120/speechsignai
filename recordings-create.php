@@ -1,5 +1,5 @@
 <?php
-require 'koneksi.php';
+require 'api/koneksi.php';
 require_login();
 
 $success = '';
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
 </head>
 <body>
-    <?php include 'sidebar.php'; ?>
+    <?php include 'includes/sidebar.php'; ?>
 
     <div class="main-content">
         <header class="topbar">

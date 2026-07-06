@@ -1,5 +1,5 @@
 <?php
-require 'koneksi.php';
+require 'api/koneksi.php';
 
 if (is_logged_in()) {
     $user_id = $_SESSION['user_id'];
