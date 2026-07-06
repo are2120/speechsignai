@@ -51,11 +51,19 @@ if ($conn->connect_error) {
  * Berjalan di localhost (subfolder) dan Vercel (root)
  */
 function base_url($path = '') {
-    $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
-    $host = $_SERVER['HTTP_HOST'];
-    $script = $_SERVER['SCRIPT_NAME'];
-    $dir = dirname($script);
-    $base = rtrim("$protocol://$host$dir", '/');
+    // Check if we're on Vercel
+    if (getenv('VERCEL') === '1' || !empty(getenv('VERCEL_URL'))) {
+        $protocol = 'https';
+        $host = getenv('VERCEL_URL') ?: $_SERVER['HTTP_HOST'];
+        $base = $protocol . '://' . $host;
+    } else {
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+        $host = $_SERVER['HTTP_HOST'];
+        $script = $_SERVER['SCRIPT_NAME'];
+        $dir = dirname($script);
+        $base = rtrim("$protocol://$host$dir", '/');
+    }
+    
     return $base . ($path ? '/' . ltrim($path, '/') : '');
 }
 
@@ -63,17 +71,7 @@ function base_url($path = '') {
  * Helper untuk asset URL
  */
 function asset_url($path) {
-    // First, try to check if we're on Vercel or local subfolder
-    $scriptName = $_SERVER['SCRIPT_NAME'] ?? '/index.php';
-    $baseDir = dirname($scriptName);
-    
-    // If baseDir is just '/', use root-relative
-    if ($baseDir === '/' || $baseDir === '\\') {
-        return '/assets/' . ltrim($path, '/');
-    } else {
-        // Otherwise, use full base URL for local subfolder
-        return base_url('assets/' . ltrim($path, '/'));
-    }
+    return base_url('assets/' . ltrim($path, '/'));
 }
 
 function clean_input($data) {
