@@ -27,8 +27,8 @@ function load_env($path) {
     }
 }
 
-// Load file .env untuk development lokal
-load_env(__DIR__ . '/.env');
+// Load file .env untuk development lokal (from root dir)
+load_env(__DIR__ . '/../.env');
 
 // Konfigurasi database - mendukung Environment Variables Vercel dan lokal!
 $host = getenv('DB_HOST') ?: 'localhost';
