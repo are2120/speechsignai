@@ -52,17 +52,10 @@ function base_url($path = '') {
 }
 
 /**
- * Helper untuk asset URL - always use root-relative
+ * Helper untuk asset URL
  */
 function asset_url($path) {
-    // Try to auto-detect if we're in a subfolder
-    $script_name = $_SERVER['SCRIPT_NAME'];
-    $subfolder = dirname($script_name);
-    if ($subfolder === '/' || $subfolder === '\\') {
-        return '/assets/' . ltrim($path, '/');
-    } else {
-        return $subfolder . '/assets/' . ltrim($path, '/');
-    }
+    return base_url('assets/' . ltrim($path, '/'));
 }
 
 function clean_input($data) {
