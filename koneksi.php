@@ -51,39 +51,27 @@ if ($conn->connect_error) {
  * Berjalan di localhost (subfolder) dan Vercel (root)
  */
 function base_url($path = '') {
-    // Deteksi jika di Vercel atau production
-    $isVercel = getenv('VERCEL') === '1' || !empty(getenv('VERCEL_URL'));
-    
-    if ($isVercel) {
-        $protocol = 'https';
-        $host = getenv('VERCEL_URL') ?: $_SERVER['HTTP_HOST'];
-        $base = $protocol . '://' . $host;
-    } else {
-        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
-        $host = $_SERVER['HTTP_HOST'];
-        $script_name = dirname($_SERVER['SCRIPT_NAME']);
-        $base = rtrim("$protocol://$host$script_name", '/');
-    }
-    
-    if ($path) {
-        return $base . '/' . ltrim($path, '/');
-    }
-    
-    return $base;
+    $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'];
+    $script = $_SERVER['SCRIPT_NAME'];
+    $dir = dirname($script);
+    $base = rtrim("$protocol://$host$dir", '/');
+    return $base . ($path ? '/' . ltrim($path, '/') : '');
 }
 
 /**
  * Helper untuk asset URL
  */
 function asset_url($path) {
-    // Deteksi environment
-    $isVercel = getenv('VERCEL') === '1' || !empty(getenv('VERCEL_URL')) || (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'vercel.app') !== false);
+    // First, try to check if we're on Vercel or local subfolder
+    $scriptName = $_SERVER['SCRIPT_NAME'] ?? '/index.php';
+    $baseDir = dirname($scriptName);
     
-    if ($isVercel) {
-        // On Vercel, use absolute path from root
+    // If baseDir is just '/', use root-relative
+    if ($baseDir === '/' || $baseDir === '\\') {
         return '/assets/' . ltrim($path, '/');
     } else {
-        // Localhost, use base_url
+        // Otherwise, use full base URL for local subfolder
         return base_url('assets/' . ltrim($path, '/'));
     }
 }
