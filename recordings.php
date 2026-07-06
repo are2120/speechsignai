@@ -18,7 +18,7 @@ $recordings = $stmt->get_result();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
@@ -31,7 +31,7 @@ $recordings = $stmt->get_result();
                 </svg>
             </button>
             <h1 class="page-title">Rekaman</h1>
-            <a href="recordings-create.php" class="btn btn-primary">+ Rekam Baru</a>
+            <a href="<?php echo base_url('recordings-create.php'); ?>" class="btn btn-primary">+ Rekam Baru</a>
         </header>
 
         <main class="content">
@@ -61,7 +61,7 @@ $recordings = $stmt->get_result();
                                         <?php echo ucfirst($recording['status']); ?>
                                     </span>
                                     <div class="recording-actions">
-                                        <a href="recordings-show.php?id=<?php echo $recording['id']; ?>" style="padding: 0.5rem;">
+                                        <a href="<?php echo base_url('recordings-show.php?id=' . $recording['id']); ?>" style="padding: 0.5rem;">
                                             <svg width="1.25rem" height="1.25rem" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -79,13 +79,13 @@ $recordings = $stmt->get_result();
                             </svg>
                         </div>
                         <p class="empty-text">Belum ada rekaman</p>
-                        <a href="recordings-create.php" class="btn btn-primary" style="margin-top: 1rem;">Buat Rekaman Pertama</a>
+                        <a href="<?php echo base_url('recordings-create.php'); ?>" class="btn btn-primary" style="margin-top: 1rem;">Buat Rekaman Pertama</a>
                     </div>
                 <?php endif; ?>
             </div>
         </main>
     </div>
 
-    <script src="/assets/js/script.js"></script>
+    <script src="<?php echo asset_url('js/script.js'); ?>"></script>
 </body>
 </html>

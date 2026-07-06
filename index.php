@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="//assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
 </head>
 <body>
     <section class="hero">
@@ -24,10 +24,10 @@
             <p class="hero-subtitle">Platform AI untuk transkripsi suara, ringkasan otomatis, dan deteksi bahasa isyarat real-time</p>
             <div class="hero-actions">
                 <?php if (is_logged_in()): ?>
-                    <a href="dashboard.php" class="btn btn-primary">Masuk ke Dashboard</a>
+                    <a href="<?php echo base_url('dashboard.php'); ?>" class="btn btn-primary">Masuk ke Dashboard</a>
                 <?php else: ?>
-                    <a href="register.php" class="btn btn-primary">Daftar Gratis</a>
-                    <a href="login.php" class="btn btn-secondary">Masuk</a>
+                    <a href="<?php echo base_url('register.php'); ?>" class="btn btn-primary">Daftar Gratis</a>
+                    <a href="<?php echo base_url('login.php'); ?>" class="btn btn-secondary">Masuk</a>
                 <?php endif; ?>
             </div>
         </div>
@@ -66,6 +66,6 @@
         </div>
     </section>
 
-    <script src="//assets/js/script.js"></script>
+    <script src="<?php echo asset_url('js/script.js'); ?>"></script>
 </body>
 </html>

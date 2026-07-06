@@ -11,7 +11,7 @@ require_login();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
@@ -61,7 +61,7 @@ require_login();
         </main>
     </div>
 
-    <script src="/assets/js/script.js"></script>
+    <script src="<?php echo asset_url('js/script.js'); ?>"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
             const video = document.getElementById('video');

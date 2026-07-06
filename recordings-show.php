@@ -11,7 +11,7 @@ $stmt->execute();
 $recording = $stmt->get_result()->fetch_assoc();
 
 if (!$recording) {
-    header('Location: recordings.php');
+    header('Location: ' . base_url('recordings.php'));
     exit;
 }
 
@@ -36,7 +36,7 @@ $summary = $stmt->get_result()->fetch_assoc();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
@@ -65,7 +65,7 @@ $summary = $stmt->get_result()->fetch_assoc();
                             </p>
                         </div>
                         <div style="display: flex; gap: 0.5rem;">
-                            <a href="recordings.php" class="btn btn-secondary">Kembali</a>
+                            <a href="<?php echo base_url('recordings.php'); ?>" class="btn btn-secondary">Kembali</a>
                         </div>
                     </div>
                     
@@ -95,6 +95,6 @@ $summary = $stmt->get_result()->fetch_assoc();
         </main>
     </div>
 
-    <script src="/assets/js/script.js"></script>
+    <script src="<?php echo asset_url('js/script.js'); ?>"></script>
 </body>
 </html>

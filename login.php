@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param("is", $user['id'], $_SERVER['REMOTE_ADDR']);
             $stmt->execute();
 
-            header('Location: dashboard.php');
+            header('Location: ' . base_url('dashboard.php'));
             exit;
         } else {
             $error = 'Password salah';
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
 </head>
 <body>
     <div class="auth-container">
@@ -75,11 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
 
             <div class="auth-link">
-                <p>Belum punya akun? <a href="register.php">Daftar</a></p>
+                <p>Belum punya akun? <a href="<?php echo base_url('register.php'); ?>">Daftar</a></p>
             </div>
         </div>
     </div>
 
-    <script src="/assets/js/script.js"></script>
+    <script src="<?php echo asset_url('js/script.js'); ?>"></script>
 </body>
 </html>

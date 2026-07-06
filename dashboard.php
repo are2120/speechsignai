@@ -50,7 +50,7 @@ $recent_recordings = $stmt->get_result();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
@@ -122,7 +122,7 @@ $recent_recordings = $stmt->get_result();
                     <div class="card">
                         <h3 style="font-weight: 600; font-size: 1.125rem; margin-bottom: 1rem;">Aksi Cepat</h3>
                         <div class="quick-actions">
-                            <a href="recordings-create.php" class="quick-action blue">
+                            <a href="<?php echo base_url('recordings-create.php'); ?>" class="quick-action blue">
                                 <div class="quick-action-icon blue">
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
@@ -133,7 +133,7 @@ $recent_recordings = $stmt->get_result();
                                     <p>Mulai merekam suara</p>
                                 </div>
                             </a>
-                            <a href="sign-language.php" class="quick-action purple">
+                            <a href="<?php echo base_url('sign-language.php'); ?>" class="quick-action purple">
                                 <div class="quick-action-icon purple">
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"></path>
@@ -144,7 +144,7 @@ $recent_recordings = $stmt->get_result();
                                     <p>Deteksi bahasa isyarat</p>
                                 </div>
                             </a>
-                            <a href="conversation.php" class="quick-action green">
+                            <a href="<?php echo base_url('conversation.php'); ?>" class="quick-action green">
                                 <div class="quick-action-icon green">
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
@@ -161,7 +161,7 @@ $recent_recordings = $stmt->get_result();
                     <div class="card">
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
                             <h3 style="font-weight: 600; font-size: 1.125rem;">Rekaman Terbaru</h3>
-                            <a href="recordings.php" style="color: #3b82f6; text-decoration: none; font-weight: 500; font-size: 0.875rem;">Lihat Semua</a>
+                            <a href="<?php echo base_url('recordings.php'); ?>" style="color: #3b82f6; text-decoration: none; font-weight: 500; font-size: 0.875rem;">Lihat Semua</a>
                         </div>
                         
                         <?php if ($recent_recordings->num_rows > 0): ?>
@@ -188,7 +188,7 @@ $recent_recordings = $stmt->get_result();
                                                 <?php echo ucfirst($recording['status']); ?>
                                             </span>
                                             <div class="recording-actions">
-                                                <a href="recordings-show.php?id=<?php echo $recording['id']; ?>">
+                                                <a href="<?php echo base_url('recordings-show.php?id=' . $recording['id']); ?>">
                                                     <svg width="1.25rem" height="1.25rem" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                                     </svg>
@@ -206,7 +206,7 @@ $recent_recordings = $stmt->get_result();
                                     </svg>
                                 </div>
                                 <p class="empty-text">Belum ada rekaman</p>
-                                <a href="recordings-create.php" style="color: #3b82f6; text-decoration: none; font-weight: 500;">Buat rekaman pertama Anda</a>
+                                <a href="<?php echo base_url('recordings-create.php'); ?>" style="color: #3b82f6; text-decoration: none; font-weight: 500;">Buat rekaman pertama Anda</a>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -215,6 +215,6 @@ $recent_recordings = $stmt->get_result();
         </main>
     </div>
 
-    <script src="/assets/js/script.js"></script>
+    <script src="<?php echo asset_url('js/script.js'); ?>"></script>
 </body>
 </html>

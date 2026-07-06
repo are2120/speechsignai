@@ -26,18 +26,44 @@ function load_env($path) {
 }
 
 // Load file .env untuk development lokal
-load_env(__DIR__ . '/../.env');
+load_env(__DIR__ . '/.env');
 
 // Konfigurasi database - mendukung Environment Variables Vercel dan lokal!
-$host = getenv('DB_HOST') ?: 'sql12.freesqldatabase.com';
-$user = getenv('DB_USER') ?: 'sql12832341';
-$pass = getenv('DB_PASS') ?: 'VZttT9Bi5T';
-$dbname = getenv('DB_NAME') ?: 'sql12832341';
+$host = getenv('DB_HOST') ?: 'localhost';
+$user = getenv('DB_USER') ?: 'root';
+$pass = getenv('DB_PASS') ?: '';
+$dbname = getenv('DB_NAME') ?: 'speechsign_ai';
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 
 if ($conn->connect_error) {
     die("Koneksi gagal: " . $conn->connect_error);
+}
+
+/**
+ * Helper untuk mendapatkan base URL secara dinamis
+ * Berjalan di localhost (subfolder) dan Vercel (root)
+ */
+function base_url($path = '') {
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'];
+    $script_name = dirname($_SERVER['SCRIPT_NAME']);
+    
+    // Hilangkan trailing slash dan gabung path
+    $base = rtrim("$protocol://$host$script_name", '/');
+    
+    if ($path) {
+        return $base . '/' . ltrim($path, '/');
+    }
+    
+    return $base;
+}
+
+/**
+ * Helper untuk asset URL
+ */
+function asset_url($path) {
+    return base_url('assets/' . ltrim($path, '/'));
 }
 
 function clean_input($data) {
@@ -55,7 +81,7 @@ function is_logged_in() {
 
 function require_login() {
     if (!is_logged_in()) {
-        header('Location: login.php');
+        header('Location: ' . base_url('login.php'));
         exit;
     }
 }
