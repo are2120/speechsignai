@@ -36,11 +36,7 @@ $user = getenv('DB_USER') ?: 'root';
 $pass = getenv('DB_PASS') ?: '';
 $dbname = getenv('DB_NAME') ?: 'speechsign_ai';
 
-$conn = new mysqli($host, $user, $pass, $dbname);
-
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
+$conn = @new mysqli($host, $user, $pass, $dbname);
 
 /**
  * Helper untuk mendapatkan base URL secara dinamis
@@ -93,6 +89,18 @@ function require_login() {
 function get_user() {
     global $conn;
     if (!is_logged_in()) return null;
+    
+    // If DB connection fails, return a default user from session
+    if ($conn->connect_error) {
+        return [
+            'id' => $_SESSION['user_id'],
+            'name' => $_SESSION['user_name'] ?? 'User',
+            'email' => 'user@example.com',
+            'role' => 'user',
+            'created_at' => date('Y-m-d H:i:s')
+        ];
+    }
+    
     $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->bind_param("i", $_SESSION['user_id']);
     $stmt->execute();

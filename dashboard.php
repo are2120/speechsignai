@@ -2,6 +2,7 @@
 require 'koneksi.php';
 require_login();
 
+$db_connected = !$conn->connect_error;
 $user_id = $_SESSION['user_id'];
 
 $stats = [
@@ -10,36 +11,43 @@ $stats = [
     'total_duration' => 0,
     'activity_this_week' => 0
 ];
+$recent_recordings = [];
 
-$stmt = $conn->prepare("SELECT COUNT(*) as count FROM recordings WHERE user_id = ?");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$stats['total_recordings'] = $result->fetch_assoc()['count'];
+// Only try DB queries if connection is good
+if ($db_connected) {
+    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM recordings WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stats['total_recordings'] = $result->fetch_assoc()['count'];
 
-$stmt = $conn->prepare("SELECT COUNT(*) as count FROM transcripts t JOIN recordings r ON t.recording_id = r.id WHERE r.user_id = ?");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$stats['total_transcripts'] = $result->fetch_assoc()['count'];
+    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM transcripts t JOIN recordings r ON t.recording_id = r.id WHERE r.user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stats['total_transcripts'] = $result->fetch_assoc()['count'];
 
-$stmt = $conn->prepare("SELECT COALESCE(SUM(duration), 0) as total FROM recordings WHERE user_id = ?");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$stats['total_duration'] = $result->fetch_assoc()['total'];
+    $stmt = $conn->prepare("SELECT COALESCE(SUM(duration), 0) as total FROM recordings WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stats['total_duration'] = $result->fetch_assoc()['total'];
 
-$week_ago = date('Y-m-d H:i:s', strtotime('-7 days'));
-$stmt = $conn->prepare("SELECT COUNT(*) as count FROM activity_logs WHERE user_id = ? AND created_at >= ?");
-$stmt->bind_param("is", $user_id, $week_ago);
-$stmt->execute();
-$result = $stmt->get_result();
-$stats['activity_this_week'] = $result->fetch_assoc()['count'];
+    $week_ago = date('Y-m-d H:i:s', strtotime('-7 days'));
+    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM activity_logs WHERE user_id = ? AND created_at >= ?");
+    $stmt->bind_param("is", $user_id, $week_ago);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stats['activity_this_week'] = $result->fetch_assoc()['count'];
 
-$stmt = $conn->prepare("SELECT * FROM recordings WHERE user_id = ? ORDER BY created_at DESC LIMIT 5");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$recent_recordings = $stmt->get_result();
+    $stmt = $conn->prepare("SELECT * FROM recordings WHERE user_id = ? ORDER BY created_at DESC LIMIT 5");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $recent_recordings[] = $row;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -164,9 +172,9 @@ $recent_recordings = $stmt->get_result();
                             <a href="<?php echo base_url('recordings.php'); ?>" style="color: #3b82f6; text-decoration: none; font-weight: 500; font-size: 0.875rem;">Lihat Semua</a>
                         </div>
                         
-                        <?php if ($recent_recordings->num_rows > 0): ?>
+                        <?php if (count($recent_recordings) > 0): ?>
                             <div class="recording-list">
-                                <?php while ($recording = $recent_recordings->fetch_assoc()): ?>
+                                <?php foreach ($recent_recordings as $recording): ?>
                                     <div class="recording-item">
                                         <div class="recording-info">
                                             <div class="recording-icon <?php echo $recording['file_type'] === 'video' ? 'video' : 'audio'; ?>">
